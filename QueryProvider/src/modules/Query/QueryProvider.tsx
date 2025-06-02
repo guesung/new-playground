@@ -1,8 +1,7 @@
-import { StrictPropsWithChildren } from "@/types/strict";
-import { createContext, useContext, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { Status } from "./types";
 
-interface QueryProviderProps extends StrictPropsWithChildren {}
+interface QueryProviderProps extends PropsWithChildren {}
 
 export interface QueryClientContextType {
   getQueryData: (queryKey: string) => unknown;
