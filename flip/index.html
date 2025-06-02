@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card-container">
+      <div class="card-wrapper">
+        <div class="card-front"></div>
+        <div class="card-back"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const cardContainer = document.querySelector(".card-containre");
+    const cardWrapper = document.querySelector(".card-wrapper");
+
+    const cardFront = document.querySelector(".card-front");
+    const cardBack = document.querySelector(".card-back");
+
+    cardWrapper.addEventListener("click", () => {
+      console.log(1);
+      cardWrapper.classList.add(".flipped");
+    });
+  </script>
+</html>
