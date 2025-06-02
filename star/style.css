@@ -1,0 +1,20 @@
+.star-rating {
+  display: flex;
+}
+
+.star {
+  appearance: none;
+}
+.star:hover::after,
+.star:has(~ .star:hover)::after,
+.star:checked::after,
+.star:has(~ .star:checked)::after {
+  content: "★";
+}
+
+.star::after {
+  content: "✩";
+  font-size: 50px;
+  color: hsl(60, 80%, 45%);
+  cursor: pointer;
+}
