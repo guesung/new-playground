@@ -1,12 +1,12 @@
 import "./App.css";
-import { QueryProvider, useQuery } from "./modules";
+import { useQuery } from "./modules";
 
 function App() {
   return (
-    <QueryProvider>
+    <>
       <A />
       <B />
-    </QueryProvider>
+    </>
   );
 }
 
@@ -29,10 +29,12 @@ function getDataB(): Promise<string> {
 }
 
 function A() {
-  const { data, refetch } = useQuery<string>({
+  const { data, refetch, status } = useQuery<string>({
     queryFn: getDataA,
     queryKey: "data",
   });
+
+  console.log(status);
 
   return (
     <div>

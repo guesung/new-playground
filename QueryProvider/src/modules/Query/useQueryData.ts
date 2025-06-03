@@ -1,9 +1,22 @@
 import { useSyncExternalStore } from "react";
-import { getQueryData, subscribeQueryData } from "./QueryStore";
+import {
+  getQueryData,
+  getQueryStatus,
+  subscribeQueryData,
+  subscribeQueryStatus,
+} from "./QueryStore";
+import { Status } from "./types";
 
-export function useQueryData(key: string) {
+export function useQueryData<T>(key: string): T {
   return useSyncExternalStore(
     (cb) => subscribeQueryData(key, cb),
-    () => getQueryData(key)
+    () => getQueryData(key) as T
+  );
+}
+
+export function useQueryStatus(key: string): Status {
+  return useSyncExternalStore(
+    (cb) => subscribeQueryStatus(key, cb),
+    () => getQueryStatus(key)
   );
 }

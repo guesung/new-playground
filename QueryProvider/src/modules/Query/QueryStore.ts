@@ -1,19 +1,43 @@
-// QueryStore.ts
+import { Status } from "./types";
+
 type Listener = () => void;
-const dataStore: Record<string, unknown> = {};
-const listeners: Record<string, Set<Listener>> = {};
 
-export function setQueryData(key: string, value: unknown) {
-  dataStore[key] = value;
+const emitChange = (listeners: Record<string, Set<Listener>>, key: string) => {
   listeners[key]?.forEach((cb) => cb());
-}
+};
 
-export function getQueryData(key: string) {
-  return dataStore[key];
-}
+// Data
+const dataStore: Record<string, unknown> = {};
+const dataListeners: Record<string, Set<Listener>> = {};
 
-export function subscribeQueryData(key: string, cb: Listener) {
-  if (!listeners[key]) listeners[key] = new Set();
-  listeners[key].add(cb);
-  return () => listeners[key].delete(cb);
-}
+export const setQueryData = (key: string, value: unknown) => {
+  dataStore[key] = value;
+  emitChange(dataListeners, key);
+};
+
+export const getQueryData = (key: string) => dataStore[key];
+
+export const subscribeQueryData = (key: string, cb: Listener) => {
+  if (!dataListeners[key]) dataListeners[key] = new Set();
+  dataListeners[key].add(cb);
+  return () => dataListeners[key].delete(cb);
+};
+
+// Status
+
+const statusStore: Record<string, Status> = {};
+const statusListeners: Record<string, Set<Listener>> = {};
+
+export const setQueryStatus = (key: string, status: Status) => {
+  statusStore[key] = status;
+  emitChange(statusListeners, key);
+};
+
+export const getQueryStatus = (key: string): Status =>
+  statusStore[key] ?? "idle";
+
+export const subscribeQueryStatus = (key: string, cb: Listener) => {
+  if (!statusListeners[key]) statusListeners[key] = new Set();
+  statusListeners[key].add(cb);
+  return () => statusListeners[key].delete(cb);
+};
